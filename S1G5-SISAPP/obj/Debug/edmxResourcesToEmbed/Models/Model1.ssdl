@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Course_ID" />
+    </Key>
+    <Property Name="Course_ID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Course_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Department_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="Department_ID" />
+    </Key>
+    <Property Name="Department_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Department_Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instructor">
+    <Key>
+      <PropertyRef Name="Instructor_ID" />
+    </Key>
+    <Property Name="Instructor_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Instructor_First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Instructor_Last_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Instructor_Phone_No" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Registration">
+    <Key>
+      <PropertyRef Name="Student_ID" />
+      <PropertyRef Name="Term_ID" />
+      <PropertyRef Name="Course_ID" />
+    </Key>
+    <Property Name="Student_ID" Type="int" Nullable="false" />
+    <Property Name="Term_ID" Type="int" Nullable="false" />
+    <Property Name="Course_ID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Student_ID" />
+    </Key>
+    <Property Name="Student_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Student_First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Student_Last_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Student_Phone_No" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeachingAssignment">
+    <Key>
+      <PropertyRef Name="Instructor_ID" />
+      <PropertyRef Name="Course_ID" />
+      <PropertyRef Name="Term_ID" />
+    </Key>
+    <Property Name="Instructor_ID" Type="int" Nullable="false" />
+    <Property Name="Course_ID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Term_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Term">
+    <Key>
+      <PropertyRef Name="Term_ID" />
+    </Key>
+    <Property Name="Term_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Term_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Term_Start_Date" Type="date" Nullable="false" />
+    <Property Name="Term_End_Date" Type="date" Nullable="false" />
+    <Property Name="Term_Season" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Term_Year" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Courses_Department">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="Department_ID" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="Department_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Registration_Courses">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="Course_ID" />
+      </Principal>
+      <Dependent Role="Registration">
+        <PropertyRef Name="Course_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Registration_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Student_ID" />
+      </Principal>
+      <Dependent Role="Registration">
+        <PropertyRef Name="Student_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Registration_Term">
+    <End Role="Term" Type="Self.Term" Multiplicity="1" />
+    <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Term">
+        <PropertyRef Name="Term_ID" />
+      </Principal>
+      <Dependent Role="Registration">
+        <PropertyRef Name="Term_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeachingAssignment_Courses">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="TeachingAssignment" Type="Self.TeachingAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="Course_ID" />
+      </Principal>
+      <Dependent Role="TeachingAssignment">
+        <PropertyRef Name="Course_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeachingAssignment_Instructor">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
+    <End Role="TeachingAssignment" Type="Self.TeachingAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Instructor_ID" />
+      </Principal>
+      <Dependent Role="TeachingAssignment">
+        <PropertyRef Name="Instructor_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeachingAssignment_Term">
+    <End Role="Term" Type="Self.Term" Multiplicity="1" />
+    <End Role="TeachingAssignment" Type="Self.TeachingAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Term">
+        <PropertyRef Name="Term_ID" />
+      </Principal>
+      <Dependent Role="TeachingAssignment">
+        <PropertyRef Name="Term_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Instructor" EntityType="Self.Instructor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TeachingAssignment" EntityType="Self.TeachingAssignment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Term" EntityType="Self.Term" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Courses_Department" Association="Self.FK_Courses_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Registration_Courses" Association="Self.FK_Registration_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Registration" EntitySet="Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Registration_Student" Association="Self.FK_Registration_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Registration" EntitySet="Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Registration_Term" Association="Self.FK_Registration_Term">
+      <End Role="Term" EntitySet="Term" />
+      <End Role="Registration" EntitySet="Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachingAssignment_Courses" Association="Self.FK_TeachingAssignment_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="TeachingAssignment" EntitySet="TeachingAssignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachingAssignment_Instructor" Association="Self.FK_TeachingAssignment_Instructor">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="TeachingAssignment" EntitySet="TeachingAssignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachingAssignment_Term" Association="Self.FK_TeachingAssignment_Term">
+      <End Role="Term" EntitySet="Term" />
+      <End Role="TeachingAssignment" EntitySet="TeachingAssignment" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

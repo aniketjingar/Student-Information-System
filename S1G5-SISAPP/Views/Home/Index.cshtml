@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Student Information System (SIS)</h1>
+    <h4>SIS is an application to manage Student Information and registration system.</h4>
+    <p class="lead"></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Students", "Index", "Students")</h2>
+        <p>
+            Student Information
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Course", "Index", "Cours")</h2>
+        <p>
+            Course Information
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Departments", "Index", "Departments")</h2>
+        <p>
+            Department Information
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Instructors", "Index", "Instructors")</h2>
+        <p>
+            Instructor Information
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Terms", "Index", "Terms")</h2>
+        <p>
+            Term Information
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Registrations", "Index", "Registrations")</h2>
+        <p>
+            Registration Information
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("TeachingAssignments", "Index", "TeachingAssignments")</h2>
+        <p>
+            Teaching Assignmenment Information
+        </p>
+
+    </div>
+
+</div>
